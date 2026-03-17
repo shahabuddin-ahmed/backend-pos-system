@@ -16,7 +16,7 @@ export class ConnectDB {
         }
         this.instance = ConnectDB.initialize();
         // Uncomment the line below if you want to sync the database on initialization
-        // this.instance.sync();
+        this.instance.sync();
         console.log(`Database synchronized and connected.`);
         return this.instance;
     }
