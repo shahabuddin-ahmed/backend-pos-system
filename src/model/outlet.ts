@@ -53,7 +53,7 @@ Outlet.init(
         timestamps: true,
         underscored: false,
         sequelize: newSequelize(),
-        modelName: "outlets",
+        modelName: "Outlet",
     }
 );
 

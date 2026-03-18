@@ -57,7 +57,7 @@ SaleItem.init(
         timestamps: true,
         underscored: false,
         sequelize: newSequelize(),
-        modelName: "sale_items",
+        modelName: "SaleItem",
     }
 );
 

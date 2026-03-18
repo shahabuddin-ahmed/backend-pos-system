@@ -54,7 +54,7 @@ MasterMenuItem.init(
         timestamps: true,
         underscored: false,
         sequelize: newSequelize(),
-        modelName: "master_menu_items",
+        modelName: "MasterMenuItem",
     }
 );
 

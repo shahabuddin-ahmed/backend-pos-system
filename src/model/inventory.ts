@@ -52,7 +52,7 @@ Inventory.init(
             },
         ],
         sequelize: newSequelize(),
-        modelName: "inventories",
+        modelName: "Inventory",
     }
 );
 

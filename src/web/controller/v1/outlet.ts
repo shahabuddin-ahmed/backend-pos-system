@@ -1,19 +1,19 @@
 import Joi from "joi";
 import { Request, Response } from "express";
 import { Controller } from "../controller";
-import { MasterMenuItemServiceInterface } from "../../../service/masterMenuItem";
+import { OutletServiceInterface } from "../../../service/outlet";
 
-export interface MasterMenuItemControllerInterface {
+export interface OutletControllerInterface {
     create(req: Request, res: Response): Promise<any>;
     list(req: Request, res: Response): Promise<any>;
     getById(req: Request, res: Response): Promise<any>;
     updateById(req: Request, res: Response): Promise<any>;
 }
 
-export class MasterMenuItemController extends Controller implements MasterMenuItemControllerInterface {
-    constructor(private service: MasterMenuItemServiceInterface) {
+export class OutletController extends Controller implements OutletControllerInterface {
+    constructor(private outletService: OutletServiceInterface) {
         super();
-        this.service = service;
+        this.outletService = outletService;
         this.create = this.create.bind(this);
         this.list = this.list.bind(this);
         this.getById = this.getById.bind(this);
@@ -23,17 +23,18 @@ export class MasterMenuItemController extends Controller implements MasterMenuIt
     async create(req: Request, res: Response): Promise<any> {
         const schema = Joi.object({
             name: Joi.string().required(),
-            sku: Joi.string().required(),
-            basePrice: Joi.number().positive().required(),
+            code: Joi.string().required(),
+            location: Joi.string().allow("", null).optional(),
             isActive: Joi.boolean().optional()
         });
+
         const { value } = await this.validateRequest(schema, req.body);
-        const data = await this.service.create(value);
+        const data = await this.outletService.create(value);
         return this.sendResponse({ response: data }, 201, res);
     }
 
-    async list(req: Request, res: Response): Promise<any> {
-        const data = await this.service.list();
+    async list(_req: Request, res: Response): Promise<any> {
+        const data = await this.outletService.list();
         return this.sendResponse({ response: data }, 200, res);
     }
 
@@ -42,7 +43,7 @@ export class MasterMenuItemController extends Controller implements MasterMenuIt
             id: Joi.number().integer().positive().required(),
         });
         const { value } = await this.validateRequest(schema, req.params);
-        const data = await this.service.getById(value.id);
+        const data = await this.outletService.getById(value.id);
         return this.sendResponse({ response: data }, 200, res);
     }
 
@@ -52,17 +53,16 @@ export class MasterMenuItemController extends Controller implements MasterMenuIt
         });
         const bodySchema = Joi.object({
             name: Joi.string().optional(),
-            basePrice: Joi.number().positive().optional(),
+            location: Joi.string().allow("", null).optional(),
             isActive: Joi.boolean().optional()
-        }).or("name", "basePrice", "isActive");
-
+        }).or("name", "location", "isActive");
         const { value: params } = await this.validateRequest(paramsSchema, req.params);
         const { value: body } = await this.validateRequest(bodySchema, req.body);
-        const data = await this.service.updateById(params.id, body);
+        const data = await this.outletService.updateById(params.id, body);
         return this.sendResponse({ response: data }, 200, res);
     }
 }
 
-export const newMasterMenuItemV1Controller = async (service: MasterMenuItemServiceInterface): Promise<MasterMenuItemController> => {
-    return new MasterMenuItemController(service);
+export const newOutletV1Controller = async (outletService: OutletServiceInterface): Promise<OutletController> => {
+    return new OutletController(outletService);
 };

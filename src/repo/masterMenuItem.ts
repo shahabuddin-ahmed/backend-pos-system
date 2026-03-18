@@ -7,7 +7,7 @@ export interface MasterMenuItemRepoInterface {
     findById(id: number): Promise<MasterMenuItemInterface | null>;
     findByName(name: string): Promise<MasterMenuItemInterface | null>;
     findByNameOrSku(name: string, sku: string): Promise<MasterMenuItemInterface | null>;
-    update(id: number, payload: Partial<Pick<MasterMenuItemInterface, "name" | "basePrice" | "isActive">>): Promise<MasterMenuItemInterface>;
+    updateById(id: number, payload: Partial<Pick<MasterMenuItemInterface, "name" | "basePrice" | "isActive">>): Promise<MasterMenuItemInterface>;
 }
 
 export class MasterMenuItemRepo implements MasterMenuItemRepoInterface {
@@ -28,9 +28,7 @@ export class MasterMenuItemRepo implements MasterMenuItemRepoInterface {
     }
 
     public async findByName(name: string): Promise<MasterMenuItemInterface | null> {
-        return MasterMenuItem.findOne({
-            where: { name }
-        });
+        return MasterMenuItem.findOne({ where: { name }});
     }
 
     public async list(): Promise<MasterMenuItemInterface[]> {
@@ -44,7 +42,7 @@ export class MasterMenuItemRepo implements MasterMenuItemRepoInterface {
         return MasterMenuItem.findByPk(id);
     }
 
-    public async update(id: number, payload: Partial<Pick<MasterMenuItemInterface, "name" | "basePrice" | "isActive">>): Promise<MasterMenuItemInterface> {
+    public async updateById(id: number, payload: Partial<Pick<MasterMenuItemInterface, "name" | "basePrice" | "isActive">>): Promise<MasterMenuItemInterface> {
         const item = await MasterMenuItem.findByPk(id);
         await item!.update(payload);
         return item!.get({ plain: true }) as MasterMenuItemInterface;

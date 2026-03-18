@@ -58,7 +58,7 @@ OutletMenuItem.init(
             },
         ],
         sequelize: newSequelize(),
-        modelName: "outlet_menu_items",
+        modelName: "OutletMenuItem",
     }
 );
 
