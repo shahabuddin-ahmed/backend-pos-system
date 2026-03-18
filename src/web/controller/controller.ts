@@ -22,7 +22,7 @@ export abstract class Controller {
     }
 
     async validateRequest(schema: ObjectSchema, data: any): Promise<{ value?: any; }> {
-        const { value, error } = schema.validate(data, { abortEarly: false, allowUnknown: true });
+        const { value, error } = schema.validate(data, { abortEarly: false, allowUnknown: false });
     
         if (error) {
             const errorMessages = error.details.map((detail) => detail.message);

@@ -39,6 +39,7 @@ MasterMenuItem.init(
         },
         basePrice: {
             type: DataTypes.DECIMAL(12, 2),
+            defaultValue: 0,
             allowNull: false,
         },
         isActive: {
@@ -53,7 +54,7 @@ MasterMenuItem.init(
         timestamps: true,
         underscored: false,
         sequelize: newSequelize(),
-        modelName: "master_menu_items",
+        modelName: "MasterMenuItem",
     }
 );
 

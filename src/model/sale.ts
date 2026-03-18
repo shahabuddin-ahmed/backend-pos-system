@@ -51,7 +51,7 @@ Sale.init(
             },
         ],
         sequelize: newSequelize(),
-        modelName: "sales",
+        modelName: "Sale",
     }
 );
 

@@ -41,7 +41,7 @@ OutletReceiptSequence.init(
         timestamps: true,
         underscored: false,
         sequelize: newSequelize(),
-        modelName: "outlet_receipt_sequences",
+        modelName: "OutletReceiptSequence",
     }
 );
 

@@ -2,6 +2,10 @@ export enum ERROR_CODES {
     E_PAGE_NOT_FOUND = "E_PAGE_NOT_FOUND",
     E_INVALID_DATA = "E_INVALID_DATA",
     E_INTERNAL_SERVER_ERROR = "E_INTERNAL_SERVER_ERROR",
+    E_DUPLICATE_ENTRY = "E_DUPLICATE_ENTRY",
+    E_OUTLET_NOT_FOUND = "E_OUTLET_NOT_FOUND",
+    E_MENU_ITEM_NOT_FOUND = "E_MENU_ITEM_NOT_FOUND",
+    E_INSUFFICIENT_STOCK = "E_INSUFFICIENT_STOCK",
 }
 
 export const errorMessages: Record<ERROR_CODES, { message: string }> = {
@@ -11,9 +15,20 @@ export const errorMessages: Record<ERROR_CODES, { message: string }> = {
     E_INVALID_DATA: {
         message: "Please provide valid data",
     },
-
     E_INTERNAL_SERVER_ERROR: {
         message: "Internal Server Error",
+    },
+    E_DUPLICATE_ENTRY: {
+        message: "Duplicate entry found",
+    },
+    E_OUTLET_NOT_FOUND: {
+        message: "Outlet not found",
+    },
+    E_MENU_ITEM_NOT_FOUND: {
+        message: "Menu item not found",
+    },
+    E_INSUFFICIENT_STOCK: {
+        message: "Insufficient stock for the requested menu item",
     },
 };
 
