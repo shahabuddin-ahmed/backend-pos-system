@@ -10,6 +10,9 @@ import { newMasterMenuItemService } from "./service/masterMenuItem";
 import { newOutletService } from "./service/outlet";
 import { newOutletRepo } from "./repo/outlet";
 import { newOutletV1Controller } from "./web/controller/v1/outlet";
+import { newOutletMenuItemRepo } from "./repo/outletMenuItem";
+import { newOutletMenuItemService } from "./service/outletMenuItem";
+import { newOutletMenuItemV1Controller } from "./web/controller/v1/outletMenuItem";
 
 const app = express();
 
@@ -22,19 +25,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
     // Initialize Repo
     const masterMenuItemRepo = await newMasterMenuItemRepo();
     const outletRepo = await newOutletRepo();
+    const outletMenuItemRepo = await newOutletMenuItemRepo();
 
     // Initialize Service
     const masterMenuItemService = await newMasterMenuItemService(masterMenuItemRepo);
     const outletService = await newOutletService(outletRepo);
+    const outletMenuItemService = await newOutletMenuItemService(outletMenuItemRepo, outletRepo, masterMenuItemRepo);
 
     // Initialize Controller
     const masterMenuItemV1Controller = await newMasterMenuItemV1Controller(masterMenuItemService);
     const outletV1Controller = await newOutletV1Controller(outletService);
+    const outletMenuItemV1Controller = await newOutletMenuItemV1Controller(outletMenuItemService);
 
     // Initialize Router
     const v1Router = await newV1Router({
-        outletMenuItemController: masterMenuItemV1Controller,
-        outletController: outletV1Controller
+        masterMenuItemController: masterMenuItemV1Controller,
+        outletController: outletV1Controller,
+        outletMenuItemController: outletMenuItemV1Controller,
     });
 
     app.use(morgan("short"));

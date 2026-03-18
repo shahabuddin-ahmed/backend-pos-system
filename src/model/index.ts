@@ -10,7 +10,7 @@ Outlet.hasMany(OutletMenuItem, { foreignKey: "outletId" });
 OutletMenuItem.belongsTo(Outlet, { foreignKey: "outletId" });
 
 MasterMenuItem.hasMany(OutletMenuItem, { foreignKey: "masterMenuItemId" });
-OutletMenuItem.belongsTo(MasterMenuItem, { foreignKey: "masterMenuItemId" });
+OutletMenuItem.belongsTo(MasterMenuItem, { foreignKey: "masterMenuItemId", as : "masterMenuItem" });
 
 Outlet.hasMany(Inventory, { foreignKey: "outletId" });
 Inventory.belongsTo(Outlet, { foreignKey: "outletId" });

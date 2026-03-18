@@ -32,7 +32,7 @@ export class MasterMenuItemService implements MasterMenuItemServiceInterface {
     async getById(id: number): Promise<MasterMenuItemInterface> {
         const item = await this.repo.findById(id);
         if (!item) {
-            throw new NotFoundException(ERROR_CODES.E_PAGE_NOT_FOUND, "Menu item not found");
+            throw new NotFoundException(ERROR_CODES.E_MENU_ITEM_NOT_FOUND);
         }
         return item;
     }
@@ -40,7 +40,7 @@ export class MasterMenuItemService implements MasterMenuItemServiceInterface {
     async updateById(id: number, payload: Partial<Pick<MasterMenuItemInterface, "name" | "basePrice" | "isActive">>): Promise<MasterMenuItemInterface> {
         const item = await this.repo.findById(id);
         if (!item) {
-            throw new NotFoundException(ERROR_CODES.E_PAGE_NOT_FOUND, "Menu item not found");
+            throw new NotFoundException(ERROR_CODES.E_MENU_ITEM_NOT_FOUND);
         }
 
         if (payload.name && payload.name !== item.name) {
