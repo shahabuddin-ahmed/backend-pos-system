@@ -13,6 +13,9 @@ import { newOutletV1Controller } from "./web/controller/v1/outlet";
 import { newOutletMenuItemRepo } from "./repo/outletMenuItem";
 import { newOutletMenuItemService } from "./service/outletMenuItem";
 import { newOutletMenuItemV1Controller } from "./web/controller/v1/outletMenuItem";
+import { newInventoryV1Controller } from "./web/controller/v1/inventory";
+import { newInventoryService } from "./service/inventory";
+import { newInventoryRepo } from "./repo/inventory";
 
 const app = express();
 
@@ -26,22 +29,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
     const masterMenuItemRepo = await newMasterMenuItemRepo();
     const outletRepo = await newOutletRepo();
     const outletMenuItemRepo = await newOutletMenuItemRepo();
+    const inventoryRepo = await newInventoryRepo();
 
     // Initialize Service
     const masterMenuItemService = await newMasterMenuItemService(masterMenuItemRepo);
     const outletService = await newOutletService(outletRepo);
     const outletMenuItemService = await newOutletMenuItemService(outletMenuItemRepo, outletRepo, masterMenuItemRepo);
+    const inventoryService = await newInventoryService(inventoryRepo, outletRepo, masterMenuItemRepo);
 
     // Initialize Controller
     const masterMenuItemV1Controller = await newMasterMenuItemV1Controller(masterMenuItemService);
     const outletV1Controller = await newOutletV1Controller(outletService);
     const outletMenuItemV1Controller = await newOutletMenuItemV1Controller(outletMenuItemService);
+    const inventoryV1Controller = await newInventoryV1Controller(inventoryService);
 
     // Initialize Router
     const v1Router = await newV1Router({
         masterMenuItemController: masterMenuItemV1Controller,
         outletController: outletV1Controller,
         outletMenuItemController: outletMenuItemV1Controller,
+        inventoryController: inventoryV1Controller,
     });
 
     app.use(morgan("short"));

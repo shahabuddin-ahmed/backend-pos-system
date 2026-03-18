@@ -6,29 +6,29 @@ import Sale from "./sale";
 import SaleItem from "./saleItem";
 import OutletReceiptSequence from "./outletReceiptSequence";
 
-Outlet.hasMany(OutletMenuItem, { foreignKey: "outletId" });
-OutletMenuItem.belongsTo(Outlet, { foreignKey: "outletId" });
+Outlet.hasMany(OutletMenuItem, { foreignKey: "outletId", as: "outletMenuItems" });
+OutletMenuItem.belongsTo(Outlet, { foreignKey: "outletId", as: "outlet" });
 
-MasterMenuItem.hasMany(OutletMenuItem, { foreignKey: "masterMenuItemId" });
+MasterMenuItem.hasMany(OutletMenuItem, { foreignKey: "masterMenuItemId", as: "outletMenuItems" });
 OutletMenuItem.belongsTo(MasterMenuItem, { foreignKey: "masterMenuItemId", as : "masterMenuItem" });
 
-Outlet.hasMany(Inventory, { foreignKey: "outletId" });
-Inventory.belongsTo(Outlet, { foreignKey: "outletId" });
+Outlet.hasMany(Inventory, { foreignKey: "outletId", as: "inventories" });
+Inventory.belongsTo(Outlet, { foreignKey: "outletId", as: "outlet" });
 
-MasterMenuItem.hasMany(Inventory, { foreignKey: "masterMenuItemId" });
-Inventory.belongsTo(MasterMenuItem, { foreignKey: "masterMenuItemId" });
+MasterMenuItem.hasMany(Inventory, { foreignKey: "masterMenuItemId", as: "inventories" });
+Inventory.belongsTo(MasterMenuItem, { foreignKey: "masterMenuItemId", as: "masterMenuItem" });
 
 Outlet.hasMany(Sale, { foreignKey: "outletId" });
 Sale.belongsTo(Outlet, { foreignKey: "outletId" });
 
 Sale.hasMany(SaleItem, { foreignKey: "saleId", as: "items" });
-SaleItem.belongsTo(Sale, { foreignKey: "saleId" });
+SaleItem.belongsTo(Sale, { foreignKey: "saleId", as: "sale" });
 
-MasterMenuItem.hasMany(SaleItem, { foreignKey: "masterMenuItemId" });
-SaleItem.belongsTo(MasterMenuItem, { foreignKey: "masterMenuItemId" });
+MasterMenuItem.hasMany(SaleItem, { foreignKey: "masterMenuItemId", as: "saleItems" });
+SaleItem.belongsTo(MasterMenuItem, { foreignKey: "masterMenuItemId", as: "masterMenuItem" });
 
-Outlet.hasOne(OutletReceiptSequence, { foreignKey: "outletId" });
-OutletReceiptSequence.belongsTo(Outlet, { foreignKey: "outletId" });
+Outlet.hasOne(OutletReceiptSequence, { foreignKey: "outletId", as: "receiptSequence" });
+OutletReceiptSequence.belongsTo(Outlet, { foreignKey: "outletId", as: "outlet" });
 
 export {
     Outlet,
