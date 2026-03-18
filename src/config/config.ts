@@ -35,7 +35,7 @@ const config: Config = {
 		POSTGRES_DATABASE: process.env.POSTGRES_DB || "testdb"
 	},
 	SEQUELIZEOPTIONS: {
-		host: process.env.MYSQL_HOST || "0.0.0.0",
+		host: process.env.POSTGRES_HOST || "0.0.0.0",
 		dialect: "postgres",
 		pool: {
 			max: 20,
