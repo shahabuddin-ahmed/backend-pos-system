@@ -5,7 +5,7 @@ import config from "../config/config";
 export class ConnectDB {
     private static instance: Sequelize
     public static initialize(): Sequelize {
-        return new Sequelize(config.SEQUELIZE.MYSQL_DATABASE, config.SEQUELIZE.USERNAME, config.SEQUELIZE.PASSWORD,
+        return new Sequelize(config.SEQUELIZE.POSTGRES_DATABASE, config.SEQUELIZE.USERNAME, config.SEQUELIZE.PASSWORD,
             config.SEQUELIZEOPTIONS
         );
     }

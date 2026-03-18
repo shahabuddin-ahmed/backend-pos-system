@@ -3,7 +3,7 @@ import { Dialect } from "sequelize";
 interface SequelizeConfig {
 	USERNAME: string;
 	PASSWORD: string;
-	MYSQL_DATABASE: string;
+	POSTGRES_DATABASE: string;
 }
 
 interface SequelizeOptions {
@@ -17,14 +17,8 @@ interface SequelizeOptions {
 	define: {
 		timestamps: boolean
 	},
-	charset: string;
-	collate: string;
 	logging: boolean;
 	log: any;
-}
-
-interface SocketConfig {
-    SOCKET_CORS: string[];
 }
 
 interface Config {
@@ -36,9 +30,9 @@ interface Config {
 
 const config: Config = {
 	SEQUELIZE: {
-		USERNAME: process.env.MYSQL_USER || "root",
-		PASSWORD: process.env.MYSQL_PASSWORD || "root",
-		MYSQL_DATABASE: process.env.MYSQL_DATABASE || "testdb"
+		USERNAME: process.env.POSTGRES_USER || "root",
+		PASSWORD: process.env.POSTGRES_PASSWORD || "root",
+		POSTGRES_DATABASE: process.env.POSTGRES_DB || "testdb"
 	},
 	SEQUELIZEOPTIONS: {
 		host: process.env.MYSQL_HOST || "0.0.0.0",
@@ -51,8 +45,6 @@ const config: Config = {
 		define: {
 			timestamps: false
 		},
-		charset: "utf8",
-		collate: "utf8_general_ci",
 		logging: false,
 		log: console.log
 	},
