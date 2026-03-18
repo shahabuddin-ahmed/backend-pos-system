@@ -16,6 +16,11 @@ import { newOutletMenuItemV1Controller } from "./web/controller/v1/outletMenuIte
 import { newInventoryV1Controller } from "./web/controller/v1/inventory";
 import { newInventoryService } from "./service/inventory";
 import { newInventoryRepo } from "./repo/inventory";
+import { newSaleRepo } from "./repo/sale";
+import { newOutletReceiptSequenceRepo } from "./repo/outletReceiptSequence";
+import { newSaleService } from "./service/sale";
+import { newSaleV1Controller } from "./web/controller/v1/sale";
+import { newReportV1Controller } from "./web/controller/v1/report";
 
 const app = express();
 
@@ -30,18 +35,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
     const outletRepo = await newOutletRepo();
     const outletMenuItemRepo = await newOutletMenuItemRepo();
     const inventoryRepo = await newInventoryRepo();
+    const saleRepo = await newSaleRepo();
+    const sequenceRepo = await newOutletReceiptSequenceRepo();
 
     // Initialize Service
     const masterMenuItemService = await newMasterMenuItemService(masterMenuItemRepo);
     const outletService = await newOutletService(outletRepo);
     const outletMenuItemService = await newOutletMenuItemService(outletMenuItemRepo, outletRepo, masterMenuItemRepo);
     const inventoryService = await newInventoryService(inventoryRepo, outletRepo, masterMenuItemRepo);
+    const saleService = await newSaleService(saleRepo, outletRepo, outletMenuItemRepo, inventoryRepo, sequenceRepo);
 
     // Initialize Controller
     const masterMenuItemV1Controller = await newMasterMenuItemV1Controller(masterMenuItemService);
     const outletV1Controller = await newOutletV1Controller(outletService);
     const outletMenuItemV1Controller = await newOutletMenuItemV1Controller(outletMenuItemService);
     const inventoryV1Controller = await newInventoryV1Controller(inventoryService);
+    const saleV1Controller = await newSaleV1Controller(saleService);
+    const reportV1Controller = await newReportV1Controller(saleService);
 
     // Initialize Router
     const v1Router = await newV1Router({
@@ -49,6 +59,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
         outletController: outletV1Controller,
         outletMenuItemController: outletMenuItemV1Controller,
         inventoryController: inventoryV1Controller,
+        saleController: saleV1Controller,
+        reportController: reportV1Controller,
     });
 
     app.use(morgan("short"));

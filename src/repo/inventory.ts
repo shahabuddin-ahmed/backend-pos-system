@@ -27,7 +27,7 @@ export class InventoryRepo implements InventoryRepoInterface {
                 },
                 { model: Outlet, as: "outlet" }
             ],
-            order: [["id", "ASC"]]
+            attributes: { exclude: ["outletId", "masterMenuItemId"] },
         });
     }
 

@@ -5,6 +5,7 @@ export enum ERROR_CODES {
     E_DUPLICATE_ENTRY = "E_DUPLICATE_ENTRY",
     E_OUTLET_NOT_FOUND = "E_OUTLET_NOT_FOUND",
     E_MENU_ITEM_NOT_FOUND = "E_MENU_ITEM_NOT_FOUND",
+    E_INSUFFICIENT_STOCK = "E_INSUFFICIENT_STOCK",
 }
 
 export const errorMessages: Record<ERROR_CODES, { message: string }> = {
@@ -25,6 +26,9 @@ export const errorMessages: Record<ERROR_CODES, { message: string }> = {
     },
     E_MENU_ITEM_NOT_FOUND: {
         message: "Menu item not found",
+    },
+    E_INSUFFICIENT_STOCK: {
+        message: "Insufficient stock for the requested menu item",
     },
 };
 

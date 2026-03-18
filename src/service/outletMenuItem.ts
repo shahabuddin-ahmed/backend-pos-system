@@ -45,8 +45,6 @@ export class OutletMenuItemService implements OutletMenuItemServiceInterface {
 
         return outletMenuItems.map((outletMenuItem) => ({
             id: outletMenuItem.id,
-            outletId: outletMenuItem.outletId,
-            masterMenuItemId: outletMenuItem.masterMenuItemId,
             overridePrice: outletMenuItem.overridePrice,
             isAvailable: outletMenuItem.isAvailable,
             masterMenuItem: outletMenuItem.masterMenuItem,

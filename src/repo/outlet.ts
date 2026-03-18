@@ -17,7 +17,7 @@ export class OutletRepo implements OutletRepoInterface {
     }
 
     public async list(): Promise<OutletInterface[]> {
-        return Outlet.findAll({ order: [["id", "ASC"]] });
+        return Outlet.findAll();
     }
 
     public async findById(id: number): Promise<OutletInterface | null> {

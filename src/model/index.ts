@@ -18,8 +18,8 @@ Inventory.belongsTo(Outlet, { foreignKey: "outletId", as: "outlet" });
 MasterMenuItem.hasMany(Inventory, { foreignKey: "masterMenuItemId", as: "inventories" });
 Inventory.belongsTo(MasterMenuItem, { foreignKey: "masterMenuItemId", as: "masterMenuItem" });
 
-Outlet.hasMany(Sale, { foreignKey: "outletId" });
-Sale.belongsTo(Outlet, { foreignKey: "outletId" });
+Outlet.hasMany(Sale, { foreignKey: "outletId", as: "sales" });
+Sale.belongsTo(Outlet, { foreignKey: "outletId", as: "outlet" });
 
 Sale.hasMany(SaleItem, { foreignKey: "saleId", as: "items" });
 SaleItem.belongsTo(Sale, { foreignKey: "saleId", as: "sale" });
