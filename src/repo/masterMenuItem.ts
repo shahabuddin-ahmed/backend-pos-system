@@ -1,5 +1,7 @@
-import { Op } from "sequelize";
-import MasterMenuItem, { MasterMenuItemInterface } from "../model/masterMenuItem";
+import { Op, Transaction } from "sequelize";
+import { MasterMenuItem } from "../model";
+import { MasterMenuItemInterface } from "../model/masterMenuItem";
+import newSequelize from "../infra/sequelize";
 
 export interface MasterMenuItemRepoInterface {
     create(item: MasterMenuItemInterface): Promise<MasterMenuItemInterface>;
@@ -46,6 +48,18 @@ export class MasterMenuItemRepo implements MasterMenuItemRepoInterface {
         const item = await MasterMenuItem.findByPk(id);
         await item!.update(payload);
         return item!.get({ plain: true }) as MasterMenuItemInterface;
+    }
+
+    public static async withTransaction<T>(fn: (transaction: Transaction) => Promise<T>): Promise<T> {
+        const transaction = await newSequelize().transaction();
+        try {
+            const response = await fn(transaction);
+            await transaction.commit();
+            return response;
+        } catch (error) {
+            await transaction.rollback();
+            throw error;
+        }
     }
 }
 

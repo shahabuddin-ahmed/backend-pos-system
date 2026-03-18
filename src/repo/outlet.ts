@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
-import Outlet, { OutletInterface } from "../model/outlet";
+import { Outlet } from "../model";
+import { OutletInterface } from "../model/outlet";
 
 export interface OutletRepoInterface {
     create(outlet: OutletInterface): Promise<OutletInterface>;

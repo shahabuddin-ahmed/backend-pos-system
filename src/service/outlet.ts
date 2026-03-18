@@ -32,7 +32,7 @@ export class OutletService implements OutletServiceInterface {
     async getById(id: number): Promise<OutletInterface> {
         const outlet = await this.repo.findById(id);
         if (!outlet) {
-            throw new NotFoundException(ERROR_CODES.E_PAGE_NOT_FOUND, "Outlet not found");
+            throw new NotFoundException(ERROR_CODES.E_OUTLET_NOT_FOUND);
         }
         return outlet;
     }
@@ -40,7 +40,7 @@ export class OutletService implements OutletServiceInterface {
     async updateById(id: number, payload: Partial<Pick<OutletInterface, "name" | "location" | "isActive">>): Promise<OutletInterface | null> {
         const item = await this.repo.findById(id);
         if (!item) {
-            throw new NotFoundException(ERROR_CODES.E_PAGE_NOT_FOUND, "Menu item not found");
+            throw new NotFoundException(ERROR_CODES.E_OUTLET_NOT_FOUND);
         }
 
         if (payload.name && payload.name !== item.name) {

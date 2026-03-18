@@ -1,5 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import newSequelize from "../infra/sequelize";
+import { MasterMenuItemInterface } from "./masterMenuItem";
 
 export interface OutletMenuItemInterface {
     id?: number;
@@ -7,6 +8,7 @@ export interface OutletMenuItemInterface {
     masterMenuItemId: number;
     overridePrice?: number | null;
     isAvailable?: boolean;
+    masterMenuItem?: MasterMenuItemInterface;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -17,6 +19,7 @@ class OutletMenuItem extends Model<OutletMenuItemInterface> implements OutletMen
     public masterMenuItemId!: number;
     public overridePrice?: number | null;
     public isAvailable?: boolean;
+    public masterMenuItem?: MasterMenuItemInterface;
     public readonly createdAt?: Date;
     public readonly updatedAt?: Date;
 }
