@@ -8,7 +8,7 @@ export interface MasterMenuItemServiceInterface {
     create(item: MasterMenuItemInterface): Promise<MasterMenuItemInterface>;
     list(): Promise<MasterMenuItemInterface[]>;
     getById(id: number): Promise<MasterMenuItemInterface | null>;
-    update(id: number, payload: Partial<Pick<MasterMenuItemInterface, "name" | "basePrice" | "isActive">>): Promise<MasterMenuItemInterface>;
+    updateById(id: number, payload: Partial<Pick<MasterMenuItemInterface, "name" | "basePrice" | "isActive">>): Promise<MasterMenuItemInterface>;
 }
 
 export class MasterMenuItemService implements MasterMenuItemServiceInterface {
@@ -37,7 +37,7 @@ export class MasterMenuItemService implements MasterMenuItemServiceInterface {
         return item;
     }
 
-    async update(id: number, payload: Partial<Pick<MasterMenuItemInterface, "name" | "basePrice" | "isActive">>): Promise<MasterMenuItemInterface> {
+    async updateById(id: number, payload: Partial<Pick<MasterMenuItemInterface, "name" | "basePrice" | "isActive">>): Promise<MasterMenuItemInterface> {
         const item = await this.repo.findById(id);
         if (!item) {
             throw new NotFoundException(ERROR_CODES.E_PAGE_NOT_FOUND, "Menu item not found");
@@ -50,7 +50,7 @@ export class MasterMenuItemService implements MasterMenuItemServiceInterface {
             }
         }
 
-        return this.repo.update(id, payload);
+        return this.repo.updateById(id, payload);
     }
 }
 

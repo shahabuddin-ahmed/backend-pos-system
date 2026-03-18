@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { asyncHandler } from "../../middleware/async-hander";
-import { MasterMenuItemControllerInterface } from "../../controller/v1/masterMenuItem";
+import { OutletControllerInterface } from "../../controller/v1/outlet";
 
-export const newMasterMenuItemRouter = async (controller: MasterMenuItemControllerInterface): Promise<Router> => {
+export const newOutletRouter = async (controller: OutletControllerInterface): Promise<Router> => {
     const router = Router();
     router.post("/", asyncHandler(controller.create));
     router.get("/", asyncHandler(controller.list));
