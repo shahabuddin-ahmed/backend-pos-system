@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
+import cors from "cors"
 import { newV1Router } from "./web/router/v1/index";
 import { newMasterMenuItemV1Controller } from "./web/controller/v1/masterMenuItem";
 import { globalErrorHandler } from "./web/middleware/global-error-handler";
@@ -25,6 +26,7 @@ import { newReportV1Controller } from "./web/controller/v1/report";
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 (async () => {
