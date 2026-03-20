@@ -37,6 +37,10 @@ Sale.init(
         totalAmount: {
             type: DataTypes.DECIMAL(12, 2),
             allowNull: false,
+            get() {
+                const value = this.getDataValue("totalAmount");
+                return value === null || value === undefined ? value : Number(value);
+            }
         },
     },
     {

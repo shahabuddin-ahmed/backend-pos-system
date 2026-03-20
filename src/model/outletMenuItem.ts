@@ -42,6 +42,10 @@ OutletMenuItem.init(
         overridePrice: {
             type: DataTypes.DECIMAL(12, 2),
             allowNull: true,
+            get() {
+                const value = this.getDataValue("overridePrice");
+                return value === null || value === undefined ? value : Number(value);
+            }
         },
         isAvailable: {
             type: DataTypes.BOOLEAN,
