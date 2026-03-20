@@ -45,10 +45,18 @@ SaleItem.init(
         unitPrice: {
             type: DataTypes.DECIMAL(12, 2),
             allowNull: false,
+                get() {
+                const value = this.getDataValue("unitPrice");
+                return value === null || value === undefined ? value : Number(value);
+            },
         },
         lineTotal: {
             type: DataTypes.DECIMAL(12, 2),
             allowNull: false,
+            get() {
+                const value = this.getDataValue("lineTotal");
+                return value === null || value === undefined ? value : Number(value);
+            },
         },
     },
     {

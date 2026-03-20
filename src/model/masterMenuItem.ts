@@ -41,6 +41,10 @@ MasterMenuItem.init(
             type: DataTypes.DECIMAL(12, 2),
             defaultValue: 0,
             allowNull: false,
+            get() {
+                const value = this.getDataValue("basePrice");
+                return value === null || value === undefined ? value : Number(value);
+            },
         },
         isActive: {
             type: DataTypes.BOOLEAN,
