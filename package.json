@@ -1,7 +1,7 @@
 {
-    "name": "express-mongo-boilerplate",
+    "name": "backend-pos-system",
     "version": "1.0.0",
-    "description": "Sample Express + Mongo CRUD boilerplate",
+    "description": "A backend system for a point of sale (POS) application, built with Node.js, Express, and Sequelize.",
     "main": "app.ts",
     "scripts": {
         "dev": "nodemon",
@@ -26,6 +26,7 @@
     "license": "MIT",
     "dependencies": {
         "body-parser": "^1.20.3",
+        "cors": "^2.8.6",
         "express": "^4.21.2",
         "joi": "^17.13.3",
         "morgan": "^1.10.0",
@@ -34,6 +35,7 @@
     },
     "devDependencies": {
         "@types/body-parser": "^1.19.5",
+        "@types/cors": "^2.8.19",
         "@types/express": "^5.0.3",
         "@types/morgan": "^1.9.9",
         "@types/node": "^22.5.5",
