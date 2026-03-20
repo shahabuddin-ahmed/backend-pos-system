@@ -7,6 +7,8 @@ import { SaleRepoInterface } from "../repo/sale";
 import { ERROR_CODES } from "../constant/error";
 import { NotFoundException } from "../web/exception/not-found-exception";
 import { BadRequestException } from "../web/exception/bad-request-exception";
+import { ReportPeriod, resolveReportRange } from "./reportPeriod";
+import { ReportSummary, RevenueByOutletRecord, RevenueByOutletRow, TopItemByOutletRecord, TopItemByOutletRow } from "./reportType";
 
 export interface SaleItemPayload {
     masterMenuItemId: number;
@@ -20,11 +22,41 @@ export interface CreateSalePayload {
 
 export interface SaleServiceInterface {
     createSale(payload: CreateSalePayload): Promise<any>;
-    revenueByOutlet(): Promise<any[]>;
-    topItemsByOutlet(outletId: number): Promise<any[]>;
+    revenueByOutlet(period: ReportPeriod): Promise<RevenueByOutletRow[]>;
+    topItemsByOutlet(outletId: number, period: ReportPeriod): Promise<TopItemByOutletRow[]>;
+    reportSummary(period: ReportPeriod, outletId?: number): Promise<ReportSummary>;
 }
 
 export class SaleService implements SaleServiceInterface {
+    private toPlainReportRow(entry: RevenueByOutletRecord): RevenueByOutletRow {
+        const rawEntry = entry.get({ plain: true });
+
+        return {
+            totalRevenue: Number(rawEntry?.totalRevenue ?? 0),
+            outlet: rawEntry?.outlet
+                ? {
+                    id: Number(rawEntry.outlet.id),
+                    name: rawEntry.outlet.name,
+                    code: rawEntry.outlet.code,
+                }
+                : null,
+        };
+    }
+
+    private toPlainTopItem(entry: TopItemByOutletRecord): TopItemByOutletRow {
+        const rawEntry = entry.get({ plain: true });
+
+        return {
+            totalQuantity: Number(rawEntry?.totalQuantity ?? 0),
+            masterMenuItem: rawEntry?.masterMenuItem
+                ? {
+                    name: rawEntry.masterMenuItem.name,
+                    sku: rawEntry.masterMenuItem.sku,
+                }
+                : null,
+        };
+    }
+
     constructor(
         private saleRepo: SaleRepoInterface,
         private outletRepo: OutletRepoInterface,
@@ -99,16 +131,46 @@ export class SaleService implements SaleServiceInterface {
         });
     }
 
-    async revenueByOutlet(): Promise<any[]> {
-        return this.saleRepo.revenueByOutlet();
+    async revenueByOutlet(period: ReportPeriod): Promise<RevenueByOutletRow[]> {
+        return (await this.saleRepo.revenueByOutlet(resolveReportRange(period))).map((entry) => this.toPlainReportRow(entry));
     }
 
-    async topItemsByOutlet(outletId: number): Promise<any[]> {
+    async topItemsByOutlet(outletId: number, period: ReportPeriod): Promise<TopItemByOutletRow[]> {
         const outlet = await this.outletRepo.findById(outletId);
         if (!outlet) {
             throw new NotFoundException(ERROR_CODES.E_PAGE_NOT_FOUND, "Outlet not found");
         }
-        return this.saleRepo.topItemsByOutlet(outletId);
+        return (await this.saleRepo.topItemsByOutlet(outletId, resolveReportRange(period))).map((entry) => this.toPlainTopItem(entry));
+    }
+
+    async reportSummary(period: ReportPeriod, outletId?: number): Promise<ReportSummary> {
+        const revenueByOutlet = await this.revenueByOutlet(period);
+        const totalRevenue = revenueByOutlet.reduce((sum, entry) => sum + entry.totalRevenue, 0);
+        const topOutlet = revenueByOutlet[0] ?? null;
+
+        let selectedOutletId: number | null = null;
+        if (typeof outletId === "number") {
+            const outlet = await this.outletRepo.findById(outletId);
+            if (!outlet) {
+                throw new NotFoundException(ERROR_CODES.E_PAGE_NOT_FOUND, "Outlet not found");
+            }
+            selectedOutletId = outletId;
+        } else if (topOutlet?.outlet?.id) {
+            selectedOutletId = Number(topOutlet.outlet.id);
+        }
+
+        const topItems = selectedOutletId
+            ? await this.topItemsByOutlet(selectedOutletId, period)
+            : [];
+
+        return {
+            period,
+            totalRevenue,
+            topOutlet,
+            selectedOutletId,
+            revenueByOutlet,
+            topItems,
+        };
     }
 }
 

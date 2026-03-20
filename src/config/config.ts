@@ -48,7 +48,7 @@ const config: Config = {
 		logging: false,
 		log: console.log
 	},
-	APPLICATION_SERVER_PORT: Number(process.env.APPLICATION_SERVER_PORT) || 3000,
+	APPLICATION_SERVER_PORT: Number(process.env.APPLICATION_SERVER_PORT) || 3001,
 	APP_FORCE_SHUTDOWN_SECOND: Number(process.env.APP_FORCE_SHUTDOWN_SECOND) || 30,
 };
 
