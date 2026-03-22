@@ -51,91 +51,9 @@ The existing codebase already maps cleanly into business capabilities:
 
 ## 3. ERD Diagram
 
-### 3.1 Mermaid ERD
-
 Standalone ERD link: [erd-diagram.png](./erd-diagram.png)
 
-```mermaid
-erDiagram
-    OUTLETS ||--o{ OUTLET_MENU_ITEMS : assigns
-    MASTER_MENU_ITEMS ||--o{ OUTLET_MENU_ITEMS : available_at
-
-    OUTLETS ||--o{ INVENTORIES : stores
-    MASTER_MENU_ITEMS ||--o{ INVENTORIES : tracked_as
-
-    OUTLETS ||--o{ SALES : creates
-    SALES ||--|{ SALE_ITEMS : contains
-    MASTER_MENU_ITEMS ||--o{ SALE_ITEMS : sold_as
-
-    OUTLETS ||--|| OUTLET_RECEIPT_SEQUENCES : owns
-
-    OUTLETS {
-        int id PK
-        string name
-        string code UK
-        string location
-        boolean isActive
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    MASTER_MENU_ITEMS {
-        int id PK
-        string name
-        string sku UK
-        decimal basePrice
-        boolean isActive
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    OUTLET_MENU_ITEMS {
-        int id PK
-        int outletId FK
-        int masterMenuItemId FK
-        decimal overridePrice
-        boolean isAvailable
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    INVENTORIES {
-        int id PK
-        int outletId FK
-        int masterMenuItemId FK
-        int currentStock
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    SALES {
-        int id PK
-        int outletId FK
-        string receiptNumber
-        decimal totalAmount
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    SALE_ITEMS {
-        int id PK
-        int saleId FK
-        int masterMenuItemId FK
-        int quantity
-        decimal unitPrice
-        decimal lineTotal
-        datetime createdAt
-        datetime updatedAt
-    }
-
-    OUTLET_RECEIPT_SEQUENCES {
-        int id PK
-        int outletId FK_UK
-        int lastNumber
-        datetime createdAt
-        datetime updatedAt
-    }
-```
+![ERD Diagram](./erd-diagram.png)
 
 ### 3.2 Relationship Notes
 
