@@ -61,7 +61,7 @@ Request flow:
 Router -> Controller -> Service -> Repository -> Sequelize/PostgreSQL
 ```
 
-For the assessment-ready architecture write-up, including ERD, scaling plan, microservices evolution, and offline POS strategy, see [`docs/ARCHITECTURE.md`](/Users/shahabuddinahmed/GitHub/backend-pos-system/docs/ARCHITECTURE.md).
+For the assessment-ready architecture write-up, including ERD, scaling plan, microservices evolution, and offline POS strategy, see [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
 
 ## Key Business Rules
 
@@ -111,7 +111,7 @@ APP_FORCE_SHUTDOWN_SECOND=30
 Notes:
 
 - `POSTGRES_PORT` is currently not used by the Sequelize config in this codebase.
-- If a variable is omitted, the app falls back to the defaults defined in [`src/config/config.ts`](/Users/shahabuddinahmed/GitHub/backend-pos-system/src/config/config.ts).
+- If a variable is omitted, the app falls back to the defaults defined in [`src/config/config.ts`](./src/config/config.ts).
 
 ## Requirements
 
