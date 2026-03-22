@@ -53,7 +53,7 @@ The existing codebase already maps cleanly into business capabilities:
 
 ### 3.1 Mermaid ERD
 
-Standalone ERD link: [erd-diagram.png](/Users/shahabuddinahmed/GitHub/backend-pos-system/docs/erd-diagram.png)
+Standalone ERD link: [erd-diagram.png](./erd-diagram.png)
 
 ```mermaid
 erDiagram
